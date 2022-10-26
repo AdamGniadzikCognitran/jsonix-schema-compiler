@@ -1,18 +1,26 @@
 package org.hisrc.jsonix.xml.xsom.tests;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.hisrc.jsonix.xml.xsom.ParticleMultiplicityCounter;
 import org.hisrc.xml.bind.model.util.MModelInfoLoader;
 import org.hisrc.xml.xsom.XSFunctionApplier;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPropertyInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.MClassInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MModelInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MPropertyInfo;
 
+import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.Multiplicity;
 import com.sun.tools.xjc.model.nav.NClass;
 import com.sun.tools.xjc.model.nav.NType;
+import com.sun.xml.xsom.impl.ParticleImpl;
+import com.sun.xml.xsom.impl.WildcardImpl;
+import sun.reflect.generics.tree.Wildcard;
 
 public class MultiplicityCounterAnyElement01Test {
 

@@ -13,8 +13,11 @@
 	</xs:annotation>
 
 	<xs:complexType name="ae01">
+        <xs:annotation>
+            <xs:documentation>This allows additional elements to be added to support non WMS Layer services.</xs:documentation>
+        </xs:annotation>
 		<xs:sequence>
-			<xs:any minOccurs="2" maxOccurs="20" />
+			<xs:any namespace="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb2" minOccurs="2" maxOccurs="20" />
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

@@ -12,6 +12,7 @@ import org.hisrc.jscm.codemodel.expression.JSObjectLiteral;
 import org.hisrc.jsonix.naming.Naming;
 import org.hisrc.jsonix.xml.xsom.ParticleMultiplicityCounter;
 import org.hisrc.xml.xsom.XSFunctionApplier;
+import org.jvnet.jaxb2_commons.xjc.model.concrete.origin.XJCCMPropertyInfoOrigin;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyAttributePropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAnyElementPropertyInfo;
 import org.jvnet.jaxb2_commons.xml.bind.model.MAttributePropertyInfo;
@@ -32,6 +33,8 @@ import org.jvnet.jaxb2_commons.xml.bind.model.MWrappable;
 import org.jvnet.jaxb2_commons.xml.bind.model.origin.MPropertyInfoOrigin;
 
 import com.sun.tools.xjc.model.Multiplicity;
+import com.sun.xml.xsom.impl.ParticleImpl;
+import com.sun.xml.xsom.impl.WildcardImpl;
 
 public final class PropertyInfoVisitor<T, C extends T> implements MPropertyInfoVisitor<T, C, JSObjectLiteral> {
 
@@ -159,6 +162,26 @@ public final class PropertyInfoVisitor<T, C extends T> implements MPropertyInfoV
 
 	public JSObjectLiteral visitAnyElementPropertyInfo(MAnyElementPropertyInfo<T, C> info) {
 		JSObjectLiteral options = this.codeModel.object();
+        final XJCCMPropertyInfoOrigin origin = (XJCCMPropertyInfoOrigin) info.getOrigin();
+        boolean addAnyNamespace = !(origin.getSource().getSchemaComponent() instanceof com.sun.xml.xsom.impl.ComplexTypeImpl);
+        final JSArrayLiteral namespaces = this.codeModel.array();
+        if(addAnyNamespace)
+        {
+            final ParticleImpl schemaComponent = (ParticleImpl) origin.getSource().getSchemaComponent();
+            if (schemaComponent.getTerm() instanceof WildcardImpl.Any)
+            {
+                namespaces.append(this.codeModel.string("##any"));
+            }
+            else if (schemaComponent.getTerm() instanceof WildcardImpl.Finite)
+            {
+                final WildcardImpl.Finite term = (WildcardImpl.Finite) (schemaComponent.getTerm());
+                for(String nm : term.getNamespaces()){
+                    namespaces.append(this.codeModel.string(nm));
+                }
+            }
+        }
+
+        options.append("namespaces", addAnyNamespace ? namespaces : this.codeModel.array());
 		createPropertyInfoOptions(info, options);
 		createWildcardOptions(info, options);
 		createMixableOptions(info, options);

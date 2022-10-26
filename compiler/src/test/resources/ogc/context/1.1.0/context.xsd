@@ -4,8 +4,8 @@
 	<xs:annotation>
 		<xs:appinfo>context.xsd</xs:appinfo>
 		<xs:documentation>
-	This XML Schema defines the encoding of a Web Map Context Document.  Primary editor: Tom Kralidis 
-		
+	This XML Schema defines the encoding of a Web Map Context Document.  Primary editor: Tom Kralidis
+
 	WMC is an OGC Standard.
 	Copyright (c) 2005,2010 Open Geospatial Consortium.
 	To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
